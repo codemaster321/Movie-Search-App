@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import StarRating from "./components/StarRating";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -13,6 +14,8 @@ function App() {
   function handleQuery(e) {
     setQuery(inputRef.current.value);
     console.log(query);
+    setSelectedId("");
+    setMovieDetail("");
   }
 
   useEffect(() => {
@@ -91,8 +94,9 @@ function App() {
         </ul>
       </div>
       <div className="movie-detail">
-        <h1 style={{ textAlign: "center" }}>Plot</h1>
+        {selectedId && <h1 style={{ textAlign: "center" }}>Plot</h1>}
         {selectedId && query && movieDetail.Plot}
+        {selectedId && <StarRating />}
       </div>
     </div>
   );
