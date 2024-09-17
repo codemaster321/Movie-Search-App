@@ -18,7 +18,7 @@ export default function StarRating() {
   return (
     <div style={containerStyle}>
       <div style={starContainerStyle}>
-        {Array.from({ length: 5 }, (_, i) => (
+        {Array.from({ length: 10 }, (_, i) => (
           <Star
             onStar={() => setRating(i + 1)}
             key={i}

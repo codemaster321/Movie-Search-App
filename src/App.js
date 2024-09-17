@@ -23,7 +23,7 @@ function App() {
       try {
         setLoading(true);
         const res = await fetch(
-          `http://www.omdbapi.com/?s=${query}&apikey=d6bb10c1`
+          `https://www.omdbapi.com/?s=${query}&apikey=d6bb10c1`
         );
         const resp = await res.json();
         console.log(resp);
@@ -47,7 +47,7 @@ function App() {
       try {
         setLoading(true);
         const res = await fetch(
-          `http://www.omdbapi.com/?apikey=d6bb10c1&i=${selectedId}`
+          `https://www.omdbapi.com/?apikey=d6bb10c1&i=${selectedId}`
         );
         const resp = await res.json();
         console.log(resp);
@@ -75,7 +75,6 @@ function App() {
           ref={inputRef}
           value={query}
         />
-        {loading && "Loading!!!"}
         {query.length >= 3 && !loading && error && " Movie not found !!!!!!!!!"}
         <ul>
           {movies &&
@@ -94,7 +93,8 @@ function App() {
         </ul>
       </div>
       <div className="movie-detail">
-        {selectedId && <h1 style={{ textAlign: "center" }}>Plot</h1>}
+        {selectedId && <h1 style={{ textAlign: "center" }}>Plot</h1>}{" "}
+        {loading && "Loading!!!"}
         {selectedId && query && movieDetail.Plot}
         {selectedId && <StarRating />}
       </div>
