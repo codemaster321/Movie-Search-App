@@ -19,11 +19,13 @@ function App() {
   }
 
   useEffect(() => {
+    const controller = new AbortController();
     async function movieSearch() {
       try {
         setLoading(true);
         const res = await fetch(
-          `https://www.omdbapi.com/?s=${query}&apikey=d6bb10c1`
+          `https://www.omdbapi.com/?s=${query}&apikey=d6bb10c1`,
+          { signal: controller.signal }
         );
         const resp = await res.json();
         console.log(resp);
@@ -32,7 +34,7 @@ function App() {
         setMovies(resp.Search);
         setError(null);
       } catch (err) {
-        setError(err);
+        if (err.name !== "AbortError") setError(err);
         console.log("error");
       } finally {
         setLoading(false);
@@ -40,6 +42,10 @@ function App() {
     }
     movieSearch();
     console.log(movies);
+
+    return function () {
+      controller.abort();
+    };
   }, [query]);
 
   useEffect(() => {
@@ -92,7 +98,21 @@ function App() {
             })}
         </ul>
       </div>
-      <div className="movie-detail">
+      <div
+        style={{
+          margin: "auto",
+          width: "100vw",
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+          padding: "auto",
+          alignItems: "center",
+        }}
+        className="movie-detail"
+      >
+        {selectedId && (
+          <img style={{ margin: "auto" }} src={`${movieDetail.Poster} `}></img>
+        )}
         {selectedId && <h1 style={{ textAlign: "center" }}>Plot</h1>}{" "}
         {loading && "Loading!!!"}
         {selectedId && query && movieDetail.Plot}
