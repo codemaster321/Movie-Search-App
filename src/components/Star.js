@@ -1,6 +1,6 @@
 const dimensions = {
-  width: "48px", // Add 'px' to width and height values
-  height: "48px", // Add 'px' to width and height values
+  width: "24px", // Add 'px' to width and height values
+  height: "24px", // Add 'px' to width and height values
 };
 
 export default function Star({

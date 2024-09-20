@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import StarRating from "./components/StarRating";
+import MovieDetail from "./components/MovieDetail";
+import AddedList from "./components/AddedList";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -8,6 +9,9 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [selectedId, setSelectedId] = useState("");
   const [movieDetail, setMovieDetail] = useState("");
+  const [addMovies, setAddMovies] = useState([]);
+
+  console.log(addMovies);
 
   const inputRef = useRef();
 
@@ -16,6 +20,16 @@ function App() {
     console.log(query);
     setSelectedId("");
     setMovieDetail("");
+  }
+
+  function handleAddMovie(e) {
+    console.log(movieDetail);
+    setAddMovies((movies) => {
+      console.log("movies", movies);
+      if (movies.includes(movieDetail)) return movies;
+
+      return [...movies, movieDetail];
+    });
   }
 
   useEffect(() => {
@@ -49,6 +63,7 @@ function App() {
   }, [query]);
 
   useEffect(() => {
+    const controller = new AbortController();
     async function movieDetail() {
       try {
         setLoading(true);
@@ -69,18 +84,25 @@ function App() {
       }
     }
     movieDetail();
+
+    return function () {
+      controller.abort();
+    };
   }, [selectedId]);
 
   return (
     <div className="App">
       <div>
         <h1>Movie Searcher</h1>
+
         <input
           name="input"
           onChange={handleQuery}
           ref={inputRef}
           value={query}
         />
+
+        {loading && <p>Loading...</p>}
         {query.length >= 3 && !loading && error && " Movie not found !!!!!!!!!"}
         <ul>
           {movies &&
@@ -98,26 +120,8 @@ function App() {
             })}
         </ul>
       </div>
-      <div
-        style={{
-          margin: "auto",
-          width: "100vw",
-          display: "flex",
-          flexDirection: "column",
-          gap: "1rem",
-          padding: "auto",
-          alignItems: "center",
-        }}
-        className="movie-detail"
-      >
-        {selectedId && (
-          <img style={{ margin: "auto" }} src={`${movieDetail.Poster} `}></img>
-        )}
-        {selectedId && <h1 style={{ textAlign: "center" }}>Plot</h1>}{" "}
-        {loading && "Loading!!!"}
-        {selectedId && query && movieDetail.Plot}
-        {selectedId && <StarRating />}
-      </div>
+      <MovieDetail movieDetail={movieDetail} handleAddMovie={handleAddMovie} />
+      <AddedList movies={addMovies} />
     </div>
   );
 }
