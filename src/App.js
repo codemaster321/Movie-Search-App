@@ -92,7 +92,7 @@ function App() {
 
   return (
     <div className="App">
-      <div>
+      <div className="container">
         <h1>Movie Searcher</h1>
 
         <input
@@ -113,6 +113,7 @@ function App() {
                 <li
                   onClick={() => setSelectedId(movie.imdbID)}
                   key={movie.imdbID}
+                  className="list-item"
                 >
                   {movie.Title}
                 </li>

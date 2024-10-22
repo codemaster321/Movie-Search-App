@@ -22,7 +22,7 @@ export default function StarRating() {
           <Star
             onStar={() => setRating(i + 1)}
             key={i}
-            color="#16a1cc"
+            color="#a2cc16"
             full={hoverRating ? hoverRating >= i + 1 : rating >= i + 1}
             onMouseEnter={() => setHoverRating(i + 1)}
             onMouseLeave={() => setHoverRating(0)}
