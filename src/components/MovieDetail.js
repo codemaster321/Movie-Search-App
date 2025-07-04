@@ -1,5 +1,5 @@
 import StarRating from "./StarRating";
-export default function MovieDetail({ movieDetail, handleAddMovie }) {
+export default function MovieDetail({ movieDetail, setUserRating }) {
   return (
     movieDetail && (
       <div
@@ -21,8 +21,7 @@ export default function MovieDetail({ movieDetail, handleAddMovie }) {
         />
         <h1>{movieDetail.Title}</h1>
         <p>{movieDetail.Plot}</p>
-        <button onClick={handleAddMovie}>Add to List</button>
-        <StarRating />
+        <StarRating setUserRating={setUserRating} />
       </div>
     )
   );

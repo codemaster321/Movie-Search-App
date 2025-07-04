@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import MovieDetail from "./components/MovieDetail";
 import AddedList from "./components/AddedList";
+import StarRating from "./components/StarRating";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -10,6 +11,26 @@ function App() {
   const [selectedId, setSelectedId] = useState("");
   const [movieDetail, setMovieDetail] = useState("");
   const [addMovies, setAddMovies] = useState([]);
+  const navEl = useRef(null);
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [userRating, setUserRating] = useState(0);
+
+  console.log(userRating);
+
+  const navTriggerHandler = () => {
+    setIsNavOpen(!isNavOpen);
+  };
+
+  useEffect(() => {
+    if (navEl.current) {
+      console.log("yes");
+      if (isNavOpen) {
+        navEl.current.classList.add("nav-open");
+      } else {
+        navEl.current.classList.remove("nav-open");
+      }
+    }
+  }, [isNavOpen]);
 
   console.log(addMovies);
 
@@ -27,8 +48,9 @@ function App() {
     setAddMovies((movies) => {
       console.log("movies", movies);
       if (movies.includes(movieDetail)) return movies;
-
-      return [...movies, movieDetail];
+      setSelectedId("");
+      setQuery("");
+      return [...movies, { ...movieDetail, userRating: userRating }];
     });
   }
 
@@ -92,8 +114,12 @@ function App() {
 
   return (
     <div className="App">
-      <div className="container">
+      <div className="container ">
         <h1>Movie Searcher</h1>
+
+        <button onClick={navTriggerHandler} className="btn-mobile-nav">
+          Added Movies
+        </button>
 
         <input
           name="input"
@@ -104,7 +130,7 @@ function App() {
 
         {loading && <p>Loading...</p>}
         {query.length >= 3 && !loading && error && " Movie not found !!!!!!!!!"}
-        <ul>
+        <ul className="search-movies">
           {movies &&
             !error &&
             !loading &&
@@ -121,8 +147,23 @@ function App() {
             })}
         </ul>
       </div>
-      <MovieDetail movieDetail={movieDetail} handleAddMovie={handleAddMovie} />
-      <AddedList movies={addMovies} />
+      {selectedId && (
+        <>
+          <MovieDetail
+            movieDetail={movieDetail}
+            handleAddMovie={handleAddMovie}
+            setUserRating={setUserRating}
+          />
+
+          {userRating > 0 && (
+            <button onClick={handleAddMovie}>Add to List</button>
+          )}
+        </>
+      )}
+
+      <div className="main-nav" ref={navEl}>
+        <AddedList movies={addMovies} setMovies={setAddMovies} />
+      </div>
     </div>
   );
 }
