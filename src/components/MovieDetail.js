@@ -1,5 +1,6 @@
 import StarRating from "./StarRating";
-export default function MovieDetail({ movieDetail, setUserRating }) {
+export default function MovieDetail({ movieDetail, setUserRating,handleAddMovie,userRating }) {
+  console.log(movieDetail);
   return (
     movieDetail && (
       <div
@@ -22,6 +23,9 @@ export default function MovieDetail({ movieDetail, setUserRating }) {
         <h1>{movieDetail.Title}</h1>
         <p>{movieDetail.Plot}</p>
         <StarRating setUserRating={setUserRating} />
+         {userRating > 0 && (
+        <button onClick={handleAddMovie}>Add to List</button>
+      )}
       </div>
     )
   );

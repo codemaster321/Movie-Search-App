@@ -50,6 +50,8 @@ function App() {
       if (movies.includes(movieDetail)) return movies;
       setSelectedId("");
       setQuery("");
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return [...movies, { ...movieDetail, userRating: userRating }];
     });
   }
@@ -114,12 +116,14 @@ function App() {
 
   return (
     <div className="App">
-      <div className="container ">
-        <h1>Movie Searcher</h1>
-
-        <button onClick={navTriggerHandler} className="btn-mobile-nav">
+              <button onClick={navTriggerHandler} className="btn-mobile-nav">
           Added Movies
         </button>
+
+      <div className="container ">
+
+        <div className='movie-searchbar'>
+          <h1>Movie Searcher</h1>
 
         <input
           name="input"
@@ -128,9 +132,17 @@ function App() {
           value={query}
         />
 
-        {loading && <p>Loading...</p>}
+         {loading && <p>Loading...</p>}
         {query.length >= 3 && !loading && error && " Movie not found !!!!!!!!!"}
-        <ul className="search-movies">
+          </div>
+
+     
+
+
+
+       
+        <div className="search-movies">
+           <ul className="search-list">
           {movies &&
             !error &&
             !loading &&
@@ -146,25 +158,35 @@ function App() {
               );
             })}
         </ul>
+          </div>
+       
       </div>
-      {selectedId && (
+
+      <div className='movie-list'>
+            {selectedId && (
         <>
           <MovieDetail
             movieDetail={movieDetail}
             handleAddMovie={handleAddMovie}
             setUserRating={setUserRating}
+            userRating={userRating}
           />
 
-          {userRating > 0 && (
-            <button onClick={handleAddMovie}>Add to List</button>
-          )}
+          {/* {userRating > 0 && (
+            <button className='addButton' onClick={handleAddMovie}>Add to List</button>
+          )} */}
         </>
       )}
+        </div>
+
+      
+      
 
       <div className="main-nav" ref={navEl}>
         <AddedList movies={addMovies} setMovies={setAddMovies} />
       </div>
     </div>
+
   );
 }
 
