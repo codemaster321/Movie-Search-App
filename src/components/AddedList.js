@@ -5,8 +5,6 @@ export default function AddedList({ movies, setMovies }) {
   return (
     <div className="movies">
       {movies.length === 0 && <h1 className="empty">No Movies added yet!</h1>}
-      {movies.length > 0 && <h1>Added movies</h1>}
-
       <ul>
         {movies.map((movie, index) => (
           <li className="movie" key={movie.id}>

@@ -4,12 +4,13 @@ import Star from "./Star";
 const containerStyle = {
   display: "flex",
   alignItems: "center",
-  gap: "16px",
+  gap: "10px",
+  width: "100%",
 };
 
 const starContainerStyle = {
   display: "flex",
-  gap: "4px",
+  gap: "1px",
 };
 
 export default function StarRating({ setUserRating, defaultRating = 0 }) {
