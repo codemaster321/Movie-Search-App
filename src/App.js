@@ -116,77 +116,80 @@ function App() {
 
   return (
     <div className="App">
-              <button onClick={navTriggerHandler} className="btn-mobile-nav">
-          Added Movies
-        </button>
+      <button onClick={navTriggerHandler} className="btn-mobile-nav">
+        Added Movies
+      </button>
 
       <div className="container ">
-
-        <div className='movie-searchbar'>
+        <div className="movie-searchbar">
           <h1>Movie Searcher</h1>
+          <p class="tagline">Find and rate your favorite movies</p>
 
-        <input
-          name="input"
-          onChange={handleQuery}
-          ref={inputRef}
-          value={query}
-        />
-
-         {loading && <p>Loading...</p>}
-        {query.length >= 3 && !loading && error && " Movie not found !!!!!!!!!"}
-          </div>
-
-     
-
-
-
-       
-        <div className="search-movies">
-           <ul className="search-list">
-          {movies &&
-            !error &&
-            !loading &&
-            movies.map((movie) => {
-              return (
-                <li
-                  onClick={() => setSelectedId(movie.imdbID)}
-                  key={movie.imdbID}
-                  className="list-item"
-                >
-                  {movie.Title}
-                </li>
-              );
-            })}
-        </ul>
-          </div>
-       
-      </div>
-
-      <div className='movie-list'>
-            {selectedId && (
-        <>
-          <MovieDetail
-            movieDetail={movieDetail}
-            handleAddMovie={handleAddMovie}
-            setUserRating={setUserRating}
-            userRating={userRating}
+          <input
+            name="input"
+            onChange={handleQuery}
+            ref={inputRef}
+            value={query}
           />
 
-          {/* {userRating > 0 && (
-            <button className='addButton' onClick={handleAddMovie}>Add to List</button>
-          )} */}
-        </>
-      )}
+          {loading && <p>Loading...</p>}
+          {query.length >= 3 &&
+            !loading &&
+            error &&
+            " Movie not found !!!!!!!!!"}
         </div>
 
-      
-      
+        <div className="search-movies">
+          {!query && (
+            <div className="pre-recommend">
+              <h2>Top Picks for You 🍿</h2>
+              <ul>
+                <li>Inception</li>
+                <li>Interstellar</li>
+                <li>The Dark Knight</li>
+              </ul>
+            </div>
+          )}
+          <ul className="search-list">
+            {movies &&
+              !error &&
+              !loading &&
+              movies.map((movie) => {
+                return (
+                  <li
+                    onClick={() => setSelectedId(movie.imdbID)}
+                    key={movie.imdbID}
+                    className="list-item"
+                  >
+                    {movie.Title}
+                  </li>
+                );
+              })}
+          </ul>
+        </div>
+      </div>
+
+      <div className="movie-list">
+        {selectedId && (
+          <>
+            <MovieDetail
+              movieDetail={movieDetail}
+              handleAddMovie={handleAddMovie}
+              setUserRating={setUserRating}
+              userRating={userRating}
+            />
+
+            {/* {userRating > 0 && (
+            <button className='addButton' onClick={handleAddMovie}>Add to List</button>
+          )} */}
+          </>
+        )}
+      </div>
 
       <div className="main-nav" ref={navEl}>
         <AddedList movies={addMovies} setMovies={setAddMovies} />
       </div>
     </div>
-
   );
 }
 
