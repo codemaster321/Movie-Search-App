@@ -343,6 +343,12 @@ ul {
   }
 }
 
+@media (max-width: 900px) {
+  .empty {
+    font-size: 18px !important;
+  }
+}
+
 @media (max-width: 550px) {
   .movie-searchbar {
     flex-direction: column;
@@ -363,6 +369,11 @@ ul {
 
   .movie {
     max-width: 250px;
+  }
+
+  .empty {
+    font-size: 15px !important;
+    padding: 1rem;
   }
 }
 @media (max-width: 350px) {

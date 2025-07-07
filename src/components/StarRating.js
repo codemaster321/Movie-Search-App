@@ -6,6 +6,7 @@ const containerStyle = {
   alignItems: "center",
   gap: "10px",
   width: "100%",
+  justifyContent: "center",
 };
 
 const starContainerStyle = {
